@@ -4,7 +4,8 @@
   "description": "A playground for quinn",
   "main": "server.js",
   "scripts": {
-    "test": "jshint . && mocha"
+    "test": "jshint . && mocha",
+    "watch": "nodemon -e js,jsx"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,14 @@
   "homepage": "https://github.com/quinnjs/quinn-demo",
   "devDependencies": {
     "jshint": "^2.6.3",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "nodemon": "^1.3.7"
+  },
+  "dependencies": {
+    "gofer": "^2.2.1",
+    "lodash": "^3.3.1",
+    "node-jsx": "^0.12.4",
+    "react": "^0.12.2",
+    "react-router": "^0.12.4"
   }
 }
