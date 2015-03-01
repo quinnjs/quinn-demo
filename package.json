@@ -4,7 +4,7 @@
   "description": "A playground for quinn",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "jshint . && mocha"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/quinnjs/quinn-demo/issues"
   },
-  "homepage": "https://github.com/quinnjs/quinn-demo"
+  "homepage": "https://github.com/quinnjs/quinn-demo",
+  "devDependencies": {
+    "jshint": "^2.6.3",
+    "mocha": "^2.1.0"
+  }
 }
