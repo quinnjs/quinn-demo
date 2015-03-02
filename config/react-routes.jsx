@@ -30,6 +30,7 @@ const App = React.createClass({
     return <div>
       <h1>quinn demo</h1>
       <DataRouteHandler {...this.props.app} />
+      <h2>Others</h2>
       <ul>
         <li><Link to="about" params={{ id: 'programming' }}>Programming</Link></li>
         <li><Link to="about" params={{ id: 'node' }}>Node</Link></li>
