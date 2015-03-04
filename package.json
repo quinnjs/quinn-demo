@@ -23,7 +23,8 @@
     "nodemon": "^1.3.7"
   },
   "dependencies": {
-    "gofer": "^2.2.1",
+    "bluebird": "^2.9.13",
+    "gofer": "git://github.com/groupon/gofer#jk/promises",
     "lodash": "^3.3.1",
     "marked": "^0.3.3",
     "node-jsx": "^0.12.4",

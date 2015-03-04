@@ -5,20 +5,19 @@ const _ = require('lodash');
 const React = require('react');
 const Router = require('react-router');
 const routes = require('./config/react-routes');
+const Promise = require('bluebird');
 
 const Gofer = require('gofer');
+const Hub = require('gofer/hub');
+const hub = _.extend(new Hub(), { Promise: Promise });
+const reddit = new Gofer({
+  globalDefaults: {
+    baseUrl: 'https://api.reddit.com'
+  }
+}, hub);
 function loadBoardAbout(id) {
-  const gofer = new Gofer({
-    globalDefaults: {
-      baseUrl: 'https://api.reddit.com'
-    }
-  });
-  return new Promise(function(resolve, reject) {
-    gofer.fetch(`/r/${id}/about.json`, function(err, data) {
-      if (err) reject(err);
-      else resolve(data.data);
-    });
-  });
+  return reddit.fetch(`/r/${id}/about.json`)
+    .then(_.property('data'));
 }
 
 function execQuery(query) {
@@ -39,16 +38,13 @@ function execQuery(query) {
 }
 
 function loadData(routes, params) {
-  return Promise.all(
-    routes
-      .map(function(route) {
-        if (route.handler.getQuery) {
-          return execQuery(route.handler.getQuery(params));
-        } else {
-          return Promise.resolve({});
-        }
-      })
-  ).then(function(chunks) {
+  return Promise.map(routes, function(route) {
+    if (route.handler.getQuery) {
+      return execQuery(route.handler.getQuery(params));
+    } else {
+      return Promise.resolve({});
+    }
+  }).then(function(chunks) {
     // { a: { b: { bData }, additionalAData } };
     return chunks.reduceRight(function(data, chunk, idx) {
       // { [key]: (chunk | data) }
