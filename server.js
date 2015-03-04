@@ -5,11 +5,11 @@ const _ = require('lodash');
 const React = require('react');
 const Router = require('react-router');
 const routes = require('./config/react-routes');
-const Promise = require('bluebird');
+const Bluebird = require('bluebird');
 
 const Gofer = require('gofer');
 const Hub = require('gofer/hub');
-const hub = _.extend(new Hub(), { Promise: Promise });
+const hub = _.extend(new Hub(), { Promise: Bluebird });
 const reddit = new Gofer({
   globalDefaults: {
     baseUrl: 'https://api.reddit.com'
@@ -34,15 +34,15 @@ function execQuery(query) {
         };
       });
   }
-  return Promise.reject(new Error('Unsupported query'));
+  return Bluebird.reject(new Error('Unsupported query'));
 }
 
 function loadData(routes, params) {
-  return Promise.map(routes, function(route) {
+  return Bluebird.map(routes, function(route) {
     if (route.handler.getQuery) {
       return execQuery(route.handler.getQuery(params));
     } else {
-      return Promise.resolve({});
+      return Bluebird.resolve({});
     }
   }).then(function(chunks) {
     // { a: { b: { bData }, additionalAData } };
