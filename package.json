@@ -4,7 +4,7 @@
   "description": "A playground for quinn",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node --stage 1 server",
+    "start": "babel-node --stage 1 --harmony_classes server.js",
     "test": "jshint . && mocha",
     "watch": "nodemon -e js,jsx"
   },
@@ -30,8 +30,11 @@
     "knex": "^0.7.6",
     "lodash": "^3.3.1",
     "marked": "^0.3.3",
+    "quinn": "^3.1.0",
+    "raw-body": "^1.3.4",
     "react": "^0.12.2",
     "react-router": "^0.12.4",
-    "sqlite3": "^3.0.5"
+    "sqlite3": "^3.0.5",
+    "wegweiser": "^3.2.1"
   }
 }
