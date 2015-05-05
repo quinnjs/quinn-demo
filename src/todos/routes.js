@@ -1,5 +1,5 @@
 import { json } from 'quinn/respond';
-import { GET, POST } from 'wegweiser';
+import { GET, POST, PUT } from 'wegweiser';
 import __getRawBody from 'raw-body';
 import { promisify } from 'Bluebird';
 
@@ -21,24 +21,42 @@ function readBody(req) {
 class TodoResource {
   @GET('/v1/todos')
   async listTodos(req) {
+    const rows = await db('todos').select();
     return json({
-      todos: (await db.select().from('todos')).map(Todo.fromRow)
+      todos: rows.map(Todo.fromRow)
     });
   }
 
   @POST('/v1/todos')
   async createTodo(req) {
     const todo = new Todo(await readBody(req));
-    const [ insertId ] = await db.insert(todo.toRow()).into('todos');
+    const [ insertId ] = await db('todos').insert(todo.toRow());
 
     return this.showTodo(req, { id: insertId });
   }
 
   @GET('/v1/todos/:id')
   async showTodo(req, { id }) {
-    return db.first().from('todos').where({ id })
+    return db('todos').first().where({ id })
       .then(row =>
         (row === undefined) ? undefined : json(Todo.fromRow(row)))
+  }
+
+  @PUT('/v1/todos/:id')
+  async updateTodo(req, { id }) {
+    const { label, done } = await readBody(req);
+
+    if (label !== undefined || done !== undefined) {
+      const changes = { updated_at: new Date() };
+
+      if (label !== undefined) changes.label = label;
+      if (done !== undefined) changes.done = !!done;
+
+      const changedRows = await db('todos').where({ id }).update(changes);
+      if (changedRows === 0) return;
+    }
+
+    return this.showTodo(req, { id });
   }
 }
 

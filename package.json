@@ -4,7 +4,7 @@
   "description": "A playground for quinn",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node --stage 1 --harmony_classes server.js",
+    "start": "babel-node --stage 1 server.js",
     "test": "jshint . && mocha",
     "watch": "nodemon -e js,jsx"
   },
