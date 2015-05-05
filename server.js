@@ -8,12 +8,13 @@ import todoRoutes from './src/todos/routes';
 const router = createRouter(...todoRoutes);
 
 function errorLogger(handler) {
-  return function withErrorLogger(req) {
-    return new Promise(resolve => resolve(handler(req)))
-      .then(null, function(err) {
-        console.error(err.stack);
-        return Promise.reject(err);
-      });
+  return async req => {
+    try {
+      return await handler(req);
+    } catch (err) {
+      console.error(err.stack);
+      return Promise.reject(err);
+    }
   };
 }
 
