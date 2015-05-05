@@ -10,12 +10,13 @@ import Todo from './model';
 const getRawBody = promisify(__getRawBody);
 
 // TODO: turn this into a proper module
-function readBody(req) {
-  return getRawBody(req, {
+async function readBody(req) {
+  const raw = await getRawBody(req, {
     length: req.headers['content-length'],
     limit: '1mb',
     encoding: 'utf8'
-  }).then(JSON.parse);
+  });
+  return JSON.parse(raw);
 }
 
 class TodoResource {
@@ -37,9 +38,8 @@ class TodoResource {
 
   @GET('/v1/todos/:id')
   async showTodo(req, { id }) {
-    return db('todos').first().where({ id })
-      .then(row =>
-        (row === undefined) ? undefined : json(Todo.fromRow(row)))
+    const row = await db('todos').first().where({ id });
+    return row && json(Todo.fromRow(row));
   }
 
   @PUT('/v1/todos/:id')
