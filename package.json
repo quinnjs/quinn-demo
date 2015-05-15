@@ -4,7 +4,9 @@
   "description": "A playground for quinn",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node --stage 1 server.js",
+    "prepublish": "babel --stage 1 src --out-dir lib",
+    "watch-compile": "babel --watch --stage 1 src --out-dir lib",
+    "start": "./server.js",
     "test": "mocha"
   },
   "repository": {
