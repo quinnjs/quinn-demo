@@ -1,6 +1,9 @@
 import { mapKeys, snakeCase, isEmpty, pick } from 'lodash';
+import connectDatabase from 'knex';
 
-import db from '../db';
+import dbSettings from '../knexfile';
+
+const db = connectDatabase(dbSettings.development);
 
 function toDbSelector(property) {
   const column = snakeCase(property);
