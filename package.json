@@ -25,12 +25,12 @@
   },
   "dependencies": {
     "bluebird": "^2.9.25",
-    "cass": "0.0.3",
+    "cass": "0.0.4",
     "knex": "^0.7.6",
     "lodash": "^3.8.0",
     "parsed-body": "^1.0.0",
     "quinn": "^3.2.1",
     "sqlite3": "^3.0.5",
-    "wegweiser": "^3.2.1"
+    "wegweiser": "^4.0.1"
   }
 }

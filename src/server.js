@@ -2,7 +2,8 @@ import { createServer } from 'http';
 
 import createApp from 'quinn';
 import createRouter from 'wegweiser';
-import cass from 'cass'
+import cass from 'cass';
+import Bluebird from 'bluebird';
 
 import todoRoutes from './todos/routes';
 
@@ -11,10 +12,10 @@ const router = createRouter(...todoRoutes);
 function errorLogger(handler) {
   return async req => {
     try {
-      return await handler(req);
+      return await Bluebird.resolve(handler(req));
     } catch (err) {
       console.error(err.stack);
-      return Promise.reject(err);
+      return Bluebird.reject(err);
     }
   };
 }
