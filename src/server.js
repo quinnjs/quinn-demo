@@ -5,9 +5,9 @@ import createRouter from 'wegweiser';
 import cass from 'cass';
 import Bluebird from 'bluebird';
 
-import todoRoutes from './todos/routes';
+import Todos from './todos/routes';
 
-const router = createRouter(...todoRoutes);
+const router = createRouter(Todos);
 
 function errorLogger(handler) {
   return async req => {

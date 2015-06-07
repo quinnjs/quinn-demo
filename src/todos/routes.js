@@ -5,7 +5,7 @@ import { pick } from 'lodash';
 import Todo from './model';
 import Store from '../store';
 
-class Todos {
+export default class Todos {
   constructor() {
     this.store = new Store('todos', Todo);
   }
@@ -33,5 +33,3 @@ class Todos {
     return this.store.update(id, changes);
   }
 }
-
-export default [ Todos ];
