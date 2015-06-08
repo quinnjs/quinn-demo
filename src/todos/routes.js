@@ -1,13 +1,12 @@
 import { GET, POST, PUT } from 'wegweiser';
 import parsedBody from 'parsed-body/json';
 import { pick } from 'lodash';
+import { Inject } from 'nilo';
 
-import Todo from './model';
-import Store from '../store';
-
+@Inject('todoStore')
 export default class Todos {
-  constructor() {
-    this.store = new Store('todos', Todo);
+  constructor(store) {
+    this.store = store;
   }
 
   @GET('/v1/todos')

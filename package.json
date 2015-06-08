@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/quinnjs/quinn-demo",
   "devDependencies": {
-    "babel": "^5.1.11",
+    "babel": "^5.5.5",
     "mocha": "^2.1.0"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "cass": "0.0.4",
     "knex": "^0.7.6",
     "lodash": "^3.8.0",
+    "nilo": "^2.0.1",
     "parsed-body": "^1.0.0",
     "quinn": "^3.2.1",
     "sqlite3": "^3.0.5",
