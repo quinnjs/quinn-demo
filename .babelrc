@@ -1,7 +1,9 @@
 {
+  "plugins": [ "angular2-annotations" ],
   "stage": 1,
   "whitelist": [
     "bluebirdCoroutines",
+    "flow",
     "strict",
     "es6.arrowFunctions",
     "es6.classes",

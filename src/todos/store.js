@@ -1,9 +1,7 @@
 import { mapKeys, snakeCase, isEmpty, pick } from 'lodash';
-import connectDatabase from 'knex';
+import { Inject } from 'nilo';
 
-import dbSettings from '../knexfile';
-
-const db = connectDatabase(dbSettings.development);
+import Todo from './model';
 
 function toDbSelector(property) {
   const column = snakeCase(property);
@@ -15,15 +13,15 @@ function toRow(obj) {
   return mapKeys(obj, (v, k) => snakeCase(k));
 }
 
-export default class Store {
-  constructor(tableName, Model) {
-    this.tableName = tableName;
-    this.Model = Model;
-    this.columns = Model.getPropertyNames().map(toDbSelector);
+@Inject('db')
+export default class TodoStore {
+  constructor(db) {
+    this.db = db;
+    this.columns = Todo.getPropertyNames().map(toDbSelector);
   }
 
   table() {
-    return db(this.tableName);
+    return this.db('todos');
   }
 
   query() {
@@ -31,7 +29,7 @@ export default class Store {
   }
 
   async create(props) {
-    const model = new this.Model(props);
+    const model = new Todo(props);
     const [ insertId ] = await this.table().insert(toRow(model));
 
     return this.show(insertId);
@@ -39,12 +37,12 @@ export default class Store {
 
   async list() {
     const rows = await this.query().select();
-    return rows.map(row => new this.Model(row));
+    return rows.map(row => new Todo(row));
   }
 
   async show(id) {
     const row = await this.query().first().where({ id });
-    return row && new this.Model(row);
+    return row && new Todo(row);
   }
 
   async update(id, rawChanges) {

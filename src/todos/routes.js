@@ -3,9 +3,11 @@ import parsedBody from 'parsed-body/json';
 import { pick } from 'lodash';
 import { Inject } from 'nilo';
 
-@Inject('todoStore')
+import Store from './store';
+
+@Inject()
 export default class Todos {
-  constructor(store) {
+  constructor(store: Store) {
     this.store = store;
   }
 

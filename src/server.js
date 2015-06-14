@@ -3,16 +3,19 @@ import { createServer } from 'http';
 import quinn from 'quinn';
 import cass from 'cass';
 import { Provides } from 'nilo';
+import connectDatabase from 'knex';
 
-import Store from './store';
-import Todo from './todos/model';
+import dbSettings from '../knexfile';
+
 import Todos from './todos/routes';
+
+const db = connectDatabase(dbSettings.development);
 
 const app = cass(Todos);
 
 app.graph.scan({
-  @Provides('todoStore')
-  getTodoStore() { return new Store('todos', Todo); }
+  @Provides('db')
+  getDatabase() { return db; }
 });
 
 const server = createServer(quinn(app));

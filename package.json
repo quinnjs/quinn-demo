@@ -21,6 +21,7 @@
   "homepage": "https://github.com/quinnjs/quinn-demo",
   "devDependencies": {
     "babel": "^5.5.5",
+    "babel-plugin-angular2-annotations": "^1.1.0",
     "mocha": "^2.1.0"
   },
   "dependencies": {
@@ -28,9 +29,10 @@
     "cass": "0.0.5",
     "knex": "^0.7.6",
     "lodash": "^3.8.0",
-    "nilo": "^2.0.1",
+    "nilo": "^2.1.0",
     "parsed-body": "^1.0.0",
     "quinn": "^3.2.1",
+    "reflect-metadata": "^0.1.0",
     "sqlite3": "^3.0.5",
     "wegweiser": "^4.2.0"
   }
